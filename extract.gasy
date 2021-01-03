@@ -1,0 +1,43 @@
+function myFunction() {
+   var exportName = "AtEstimationTable";
+   var outSheet; // = SpreadsheetApp.getActive().getSheetByName(exportName)
+   var ss = SpreadsheetApp.getActiveSpreadsheet();
+   var itt = ss.getSheetByName(exportName );
+   if (itt) {
+     outSheet = SpreadsheetApp.getActive().getSheetByName(exportName);
+     outSheet.clear({ formatOnly: true, contentsOnly: true });
+   } else {
+     ss.insertSheet( exportName );
+     outSheet = SpreadsheetApp.getActive().getSheetByName(exportName);
+   }
+    
+  // extract marked data
+    var ary2=[];
+    ary2.push([ "page", "no.","title","details" ]);   // for header
+    var sheets = SpreadsheetApp.getActiveSpreadsheet().getSheets();
+    console.log( sheets.length );
+    for (var i = 0; i < sheets.length ; i++ ) {      
+      var sname = sheets[i].getName();
+      const range = sheets[i].getRange('D8:D104');
+      const vals = range.getValues();
+      console.log( sname);
+      //
+      const numRows = range.getNumRows();
+      const numCols = range.getNumColumns();
+      for( var kk =0; kk<numRows ; kk++ ){
+        if( range.offset( kk,0 ).getValue() =="O" ){
+          var ary = [ sname ];
+          ary.push( range.offset(kk,1).getValue() );
+          ary.push( range.offset(kk,2).getValue() );
+          //ary.push( range.offset(kk,3).getValue() );
+          ary.push( range.offset(kk,4).getValue() );
+          ary2.push(ary);
+        }
+      }
+    }    
+  
+    // output
+    outSheet.getRange(1, 1, ary2.length, ary2[0].length).setValues(ary2);
+    outSheet.getRange( "A1:D1" ).setBackground( "#80c0ff"　);
+    //outSheet.autoResizeColumn(1,4);
+}
