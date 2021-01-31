@@ -4,7 +4,7 @@ Example of  extractor for Google Sheets
 マークした仕様書の変更箇所をを見積書用に別シートを作成しエクスポート↪
 
 
-## How to use
+## Usage
 
 1. 原本シートをを複製
 2. 見積もりたいページにD列を追加↪
